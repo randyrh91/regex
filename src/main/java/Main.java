@@ -17,19 +17,27 @@ public class Main {
     public static void main(String[] args) {
  
         // Patrón para validar el email
-        Pattern pattern = Pattern
-                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        String regex_email = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        
+        String regex_name = "^([А-Я]{1}[а-яё]{1,23})?((\\s)[А-Я]{1}[а-яё]{1,23})?((\\s)[А-Я]{1}[а-яё]{1,23})?$";
+        
+        String regex_age = "^([1-9]|120|1[0-9]|[2-9][0-9])$";
+        
+        String regex_numer = "^\\+\\d{1,3}\\s?\\(\\d{3}\\)\\s?\\d{3}([-\\s]\\d{2}){2}$";
+        
+        
+        Pattern pattern = Pattern.compile(regex_numer);
  
         // El email a validar
-        String email = "info@programacionextrema.com";
- 
+        String email = "+7 (985) 537-89-72";
+        
         Matcher mather = pattern.matcher(email);
- 
-        if (mather.find() == true) {
-            System.out.println("El email ingresado es válido.");
+       
+        if (mather.find()) {
+            System.out.println("HAY UN MATCH");
         } else {
-            System.out.println("El email ingresado es inválido.");
+            System.out.println("NO HAY UN MATCH");
+            
         }
     }
  
