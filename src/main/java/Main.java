@@ -8,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -179,5 +178,4 @@ public class Main {
         
         writeData(nombre + "|" + edad + "|" + email + "|" + numero, "D:/Universidad/Maestria/Proyectos/Curso_1/2do_Semestre/Gestion_informacion/pract4/regex/data/data_repo.txt");
     }
-
 }
