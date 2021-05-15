@@ -8,7 +8,6 @@ jdk:
 cache:
   directories:
   - $HOME/.m2
-  - $HOME/.gradle
 
 script:
   - java --version
