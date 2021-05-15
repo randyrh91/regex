@@ -11,4 +11,4 @@ cache:
 
 script:
   - java --version
-  - ./mvnw clean install -B
+  - ./mvnw clean install
