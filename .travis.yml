@@ -3,7 +3,7 @@ arch: amd64
 language: java
 
 jdk: 
-  - oraclejdk15
+  - oraclejdk13
 
 cache:
   directories:
@@ -11,5 +11,4 @@ cache:
 
 script:
   - java --version
-  - ./mvnw clean install
-  - ./mvnw test
+  - ./mvnw clean install -B
