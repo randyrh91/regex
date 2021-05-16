@@ -12,9 +12,7 @@ cache:
 addons:
   sonarcloud:
     organization: "randyrh91"
-    token: ${SONAR_TOKEN} # encrypted value of your token
+    token: ${SONAR_TOKEN}
 
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
   - mvn clean install org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar
-  - Dsonar.projectKey=randyrh91_regex
