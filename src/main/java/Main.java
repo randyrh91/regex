@@ -29,7 +29,8 @@ public class Main {
         String clean_email = "";
         if (index_arroba != -1) {
             String first = email.substring(0, index_arroba);
-            Pattern pattern_first = Pattern.compile("([_A-Za-z0-9+]+(\\.[_A-Za-z0-9-]+)*)");
+            String reg_exp = "([_A-Za-z0-9+]+(\\.[_A-Za-z0-9-]+)*)";
+            Pattern pattern_first = Pattern.compile(reg_exp);
             Matcher match_first = pattern_first.matcher(first);
             while (match_first.find()) {
                 int start = match_first.start();
@@ -38,7 +39,8 @@ public class Main {
             }
             clean_email += "@";
             String secund = email.substring(index_arroba + 1, email.length());
-            Pattern pattern_sec = Pattern.compile("([A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})*)|((\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})*)|(\\.[A-Za-z]{2,})*");
+            reg_exp = "([A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})*)|((\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})*)|(\\.[A-Za-z]{2,})*";
+            Pattern pattern_sec = Pattern.compile(reg_exp);
             Matcher match_sec = pattern_sec.matcher(secund);
             while (match_sec.find()) {
                 int start = match_sec.start();
@@ -51,7 +53,8 @@ public class Main {
 
     public static String cleanAge(String age) {
         String clean_age = "";
-        Pattern pattern = Pattern.compile("(^(120|1[0-1][0-9]|[2-9][0-9]|1[0-9]|[1-9])){1}");
+        String reg_exp = "(^(120|1[0-1][0-9]|[2-9][0-9]|1[0-9]|[1-9])){1}";
+        Pattern pattern = Pattern.compile(reg_exp);
         Matcher match = pattern.matcher(age);
         if (match.find()) {
             clean_age = age.substring(match.start(), match.end());
@@ -61,7 +64,8 @@ public class Main {
 
     public static String cleanName(String name) {
         String clean_name = "";
-        Pattern pattern = Pattern.compile("([А-Я]{1}[а-яё]{1,23})?");
+        String reg_exp = "([А-Я]{1}[а-яё]{1,23})?";
+        Pattern pattern = Pattern.compile(reg_exp);
         Matcher match = pattern.matcher(name);
         while (match.find()) {
             clean_name += name.substring(match.start(), match.end()) + " ";
@@ -76,7 +80,7 @@ public class Main {
         int id = 0;
         if (match.find()) {
             String sub = number.substring(match.start(), match.end());
-            number = number.replaceFirst("\\"+sub, "");
+            number = number.replaceFirst("\\" + sub, "");
             clean_number = sub;
             pattern = Pattern.compile("(\\d{1})");
             match = pattern.matcher(number);
@@ -110,39 +114,42 @@ public class Main {
         }
         return clean_number.trim();
     }
-    
-    public static String[] readData(String archivo) throws IOException{
+
+    public static String[] readData(String archivo) throws IOException {
         String texto;
         String texto_arr = "";
         InputStreamReader f = new InputStreamReader(new FileInputStream(archivo), StandardCharsets.UTF_8);
         try (BufferedReader b = new BufferedReader(f)) {
-            while((texto = b.readLine())!=null) {
+            while ((texto = b.readLine()) != null) {
                 texto_arr += texto;
             }
         }
-        String [] arr = texto_arr.trim().split(Pattern.quote("|"));
+        String[] arr = texto_arr.trim().split(Pattern.quote("|"));
         return arr;
     }
-    
-    public static void writeData(String text, String rute) throws FileNotFoundException, IOException{
+
+    public static void writeData(String text, String rute) throws FileNotFoundException, IOException {
         try {
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rute), "utf-8"));
-            out.write(text);
-            out.close();   
+            FileOutputStream fos = new FileOutputStream(rute);
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
+            try (BufferedWriter out = new BufferedWriter(osw)) {
+                out.write(text);
+            }
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public static void main(String[] args) throws IOException {
-        
+
         //Lectura de datos
-        String [] data = readData("D:/Universidad/Maestria/Proyectos/Curso_1/2do_Semestre/Gestion_informacion/pract4/regex/data/data.txt");
-  
+        String[] data = readData("D:/Universidad/Maestria/Proyectos/Curso_1/2do_Semestre/Gestion_informacion/pract4/regex/data/data.txt");
+
         // Patrón para validar el email
         String email = data[3];
-        String regex_email = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        String regex_email;
+        regex_email = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern_email = Pattern.compile(regex_email);
         Matcher mather_email = pattern_email.matcher(email);
         if (!mather_email.find()) {
@@ -175,7 +182,7 @@ public class Main {
         if (!mather_numer.find()) {
             numero = cleanNumber(numero);
         }
-        
+
         writeData(nombre + "|" + edad + "|" + email + "|" + numero, "D:/Universidad/Maestria/Proyectos/Curso_1/2do_Semestre/Gestion_informacion/pract4/regex/data/data_repo.txt");
     }
 }
