@@ -130,10 +130,11 @@ public class Main {
 
     public static void writeData(String text, String rute) throws FileNotFoundException, IOException {
         try {
-            FileOutputStream fos = new FileOutputStream(rute);
-            OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
-            try (BufferedWriter out = new BufferedWriter(osw)) {
-                out.write(text);
+            try (FileOutputStream fos = new FileOutputStream(rute)) {
+                OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
+                try (BufferedWriter out = new BufferedWriter(osw)) {
+                    out.write(text);
+                }
             }
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
